@@ -53,7 +53,7 @@ def main():
             r = r_min + i * r_delta
             c = c_max - j * c_delta
 
-            img[j,i] = greyscale.get_colour(mandelbrot.compute(r,c,iterations)).to_colour_list()
+            img[j,i] = greyscale.get_colour(mandelbrot.compute(r,c,iterations)).to_rgb_channel_list()
 
     img = Image.fromarray(img,'RGB')
     img.save(filename)

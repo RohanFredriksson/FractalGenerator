@@ -21,5 +21,5 @@ class Colour:
         self.g = g
         self.b = b
 
-    def to_colour_list(self):
+    def to_rgb_channel_list(self):
         return [self.r,self.g,self.b]
