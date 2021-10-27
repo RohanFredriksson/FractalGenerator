@@ -3,13 +3,13 @@ import numpy
 from PIL import Image
 
 import mandelbrot
-from greyscale import * 
+from colourmaps import *
 
 def main():
     
     args = sys.argv
-    if len(args) < 7:
-        print("Not enough arguments provided.\n\nUsage:   python3 main.py x y zoom width height iterations [filename]\nExample: python3 main.py -0.75 0 1 1920 1080 64\n")
+    if len(args) < 8:
+        print("Not enough arguments provided.\n\nUsage:   python3 main.py x y zoom width height iterations colourmap [filename]\nExample: python3 main.py -0.75 0 1 1920 1080 64 greyscale\n")
         return
 
     x = 0
@@ -18,6 +18,7 @@ def main():
     width = 0
     height = 0
     iterations = 0
+    map_name = ""
 
     try:
         x = float(args[1])
@@ -26,13 +27,17 @@ def main():
         width = int(args[4])
         height = int(args[5])
         iterations = int(args[6])
+        map_name = args[7]
     except:
         print("Error: One of the numeric arguments is not numerical.")
         return
 
     filename = "fractal.png"
-    if len(args) > 7:
-        filename = args[7]
+    if len(args) > 8:
+        filename = args[8]
+
+    # Get the colour map object specified by the user.
+    c_map = maps.get_colour_map(map_name)
 
     units_per_pixel = 5 / (zoom * width)
 
@@ -53,7 +58,7 @@ def main():
             r = r_min + i * r_delta
             c = c_max - j * c_delta
 
-            img[j,i] = greyscale.get_colour(mandelbrot.compute(r,c,iterations)).to_rgb_channel_list()
+            img[j,i] = c_map.get_colour(mandelbrot.compute(r,c,iterations)).to_rgb_channel_list()
 
     img = Image.fromarray(img,'RGB')
     img.save(filename)
