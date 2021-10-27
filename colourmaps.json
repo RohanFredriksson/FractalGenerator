@@ -6,4 +6,13 @@
             {"position":1,"colour":{"r":0,"g":0,"b":0}}
         ]
     }
+    ,
+    {
+        "name":"vikings",
+        "points":[
+            {"position":0,"colour":{"r":0,"g":0,"b":0}},
+            {"position":0.004,"colour":{"r":86,"g":20,"b":176}},
+            {"position":1,"colour":{"r":219,"g":214,"b":92}}
+        ]
+    }
 ]
