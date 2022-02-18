@@ -6,8 +6,6 @@ from multiprocessing import Process, Queue
 
 import mandelbrot
 from colormaps import *
-
-from settings import settings
 import settings as Settings
 
 num_processes = 16
@@ -16,6 +14,7 @@ slices = Queue()
 
 def main():
 
+    settings = Settings.load()
     x = settings['x']
     y = settings['y']
     zoom = settings['zoom']

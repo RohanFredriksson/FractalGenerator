@@ -19,11 +19,16 @@ default_settings = {
     }
 }
 
-def add_missing_keys(current_dict, default_dict):
+def add_missing_keys(current_dict, default_dict, parent_dict, parent_key):
 
     # If the variable is not a dictionary, make it one.
     if type(current_dict) != dict:
-        current_dict = {}
+
+        if parent_dict == None or parent_key == None:
+            return
+
+        parent_dict[parent_key] = {}
+        current_dict = parent_dict[parent_key]
 
     for key in default_dict:
 
@@ -32,32 +37,31 @@ def add_missing_keys(current_dict, default_dict):
             current_dict[key] = default_dict[key]
 
         # If the key is in the current dictionary and is a dictionary, check it.
-        elif type(key) == dict:
-            add_missing_keys(current_dict[key], default_dict[key])
+        if type(default_dict[key]) == dict:
+            add_missing_keys(current_dict[key], default_dict[key], current_dict, key)
 
-# Set up user settings.
-settings = copy.deepcopy(default_settings)
+def save(settings):
 
-try:
-
-    # Try and read the settings from the file.
-    with open('settings.json') as settings_file:
-        file_settings = json.load(settings_file)
-
-    # Add any missing keys.
-    add_missing_keys(file_settings, default_settings)
-
-    settings = file_settings
-
-except (OSError, json.JSONDecodeError) as e:
-
-    # If the file cannot be found, or is an invalid JSON file, rewrite it with default settings.
-    with open("settings.json", "w") as settings_file:
-        json.dump(default_settings, settings_file)
-
-def save():
-    
     # Write the settings to the file.
     with open("settings.json", "w") as settings_file:
         json.dump(settings, settings_file)
 
+def load():
+
+    try:
+
+        # Try and read the settings from the file.
+        with open('settings.json') as settings_file:
+            file_settings = json.load(settings_file)
+
+        # Add any missing keys.
+        add_missing_keys(file_settings, default_settings, None, None)
+        save(file_settings)
+        return file_settings
+
+    except:
+
+        # If the file cannot be found, or is an invalid JSON file, rewrite it with default settings.
+        save(default_settings)
+    
+    return copy.deepcopy(default_settings)

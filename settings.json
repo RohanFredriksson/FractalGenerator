@@ -1,1 +1,1 @@
-{"x": -0.75, "y": 0, "zoom": 1, "width": 1920, "height": 1080, "iterations": 32, "fractal": "mandelbrot", "color": {"map": "instagram", "type": {"name": "wave", "frequency": 10}}}
+{"x": -0.3702461674528304, "y": 0.6487461306014151, "zoom": 1024, "width": 1920, "height": 1080, "iterations": 600, "fractal": "mandelbrot", "color": {"map": "instagram", "type": {"name": "wave", "frequency": 256}}}
