@@ -5,45 +5,30 @@ from PIL import Image
 from multiprocessing import Process, Queue
 
 import mandelbrot
-from colourmaps import *
+from colormaps import *
+
+from settings import settings
+import settings as Settings
 
 num_processes = 16
 processes = []
 slices = Queue()
 
 def main():
-    
-    args = sys.argv
-    if len(args) < 8:
-        print("Not enough arguments provided.\n\nUsage:   python3 main.py x y zoom width height iterations colourmap [filename]\nExample: python3 main.py -0.75 0 1 1920 1080 64 greyscale\n")
-        return
 
-    x = 0
-    y = 0
-    zoom = 0
-    width = 0
-    height = 0
-    iterations = 0
-    map_name = ""
+    x = settings['x']
+    y = settings['y']
+    zoom = settings['zoom']
+    width = settings['width']
+    height = settings['height']
+    iterations = settings['iterations']
+    fractal = settings['fractal']
+    map_name = settings['color']['map']
+    map_colortype = settings['color']['type']
+    filename = 'fractal.png'
 
-    try:
-        x = float(args[1])
-        y = float(args[2])
-        zoom = float(args[3])
-        width = int(args[4])
-        height = int(args[5])
-        iterations = int(args[6])
-        map_name = args[7]
-    except:
-        print("Error: One of the numeric arguments is not numerical.")
-        return
-
-    filename = "fractal.png"
-    if len(args) > 8:
-        filename = args[8]
-
-    # Get the colour map object specified by the user.
-    c_map = maps.get_colour_map(map_name)
+    # Get the color map object specified by the user.
+    c_map = maps.get_color_map(map_name)
 
     # Compute necessary values
     units_per_pixel = 5 / (zoom * width)
@@ -69,6 +54,7 @@ def main():
                 r_min + (i+1) * current_width * units_per_pixel,
                 c_max, 
                 c_map, 
+                map_colortype,
                 iterations, 
                 i,
                 slices
@@ -86,6 +72,7 @@ def main():
             r_max, 
             c_max, 
             c_map, 
+            map_colortype,
             iterations, 
             num_processes-1,
             slices
@@ -121,7 +108,7 @@ def main():
     # Save the image
     image.save(filename)
 
-def generate_slice(width, height, r_min, c_min, r_max, c_max, colour_map, iterations, slice_number, queue):
+def generate_slice(width, height, r_min, c_min, r_max, c_max, color_map, color_type, iterations, slice_number, queue):
     
     # Calculate the delta values
     r_delta = (r_max - r_min) / width
@@ -137,7 +124,7 @@ def generate_slice(width, height, r_min, c_min, r_max, c_max, colour_map, iterat
             r = r_min + i * r_delta
             c = c_max - j * c_delta
 
-            img[j,i] = colour_map.get_colour(mandelbrot.compute(r,c,iterations)).to_rgb_channel_list()
+            img[j,i] = color_map.get_color(mandelbrot.compute(r,c,iterations), color_type).to_rgb_channel_list()
     
     # Store the 2D array in the image object and return it to the queue.
     img = Image.fromarray(img,'RGB')
