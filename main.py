@@ -1,11 +1,9 @@
-import sys
 import numpy
-import os
 from PIL import Image
 from multiprocessing import Process, Queue
 
 import mandelbrot
-from colormaps import *
+import colormaps as ColorMaps
 import settings as Settings
 
 num_processes = 16
@@ -14,7 +12,9 @@ slices = Queue()
 
 def main():
 
+    maps = ColorMaps.load()
     settings = Settings.load()
+
     x = settings['x']
     y = settings['y']
     zoom = settings['zoom']

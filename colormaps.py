@@ -33,4 +33,5 @@ class ColorMaps:
 
         return c
 
-maps = ColorMaps()
+def load():
+    return ColorMaps()
