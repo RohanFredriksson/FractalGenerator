@@ -19,7 +19,7 @@
         "name":"vikings",
         "points":[
             {"position":0,"color":{"r":0,"g":0,"b":0}},
-            {"position":0.004,"color":{"r":86,"g":20,"b":176}},
+            {"position":0.000001,"color":{"r":86,"g":20,"b":176}},
             {"position":1,"color":{"r":219,"g":214,"b":92}}
         ]
     }
@@ -28,7 +28,7 @@
         "name":"instagram",
         "points":[
             {"position":0,"color":{"r":0,"g":0,"b":0}},
-            {"position":0.004,"color":{"r":252,"g":176,"b":69}},
+            {"position":0.000001,"color":{"r":252,"g":176,"b":69}},
             {"position":0.45,"color":{"r":252,"g":100,"b":100}},
             {"position":1,"color":{"r":131,"g":58,"b":180}}
         ]
