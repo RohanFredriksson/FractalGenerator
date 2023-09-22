@@ -7,3 +7,9 @@ This repository is no longer being worked on. I have continued development of fr
 ## Preview
 
 ![image info](preview.png)
+
+### Render Metadata
+- Fractal: Mandelbrot Set
+- Position: -0.3702461674528304 + 0.6487461306014151i
+- Zoom: 1024x
+- Iterations: 600
